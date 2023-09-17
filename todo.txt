@@ -1,0 +1,21 @@
+remove points if timeout is ended early
+
+commands
+    help
+    stats [user]
+    first # today's first user
+    leaderboard [total|streak]
+
+database or pickles to store users and their points and streaks
+
+maybe change reset to automatically run each day
+    this would cause a problem if bot was down at midnight
+        unless also reset on startup (on_ready)
+
+find host
+    one of our computers?
+    Cybera Rapid Access Cloud (free for students)
+    UofA lab machine
+    repl.it
+    gcp, google
+    ec2 aws, amazon

@@ -1,5 +1,0 @@
-Cybera Rapid Access Cloud (free for students)
-ohaton
-repl.it
-gcp
-ec2 aws
