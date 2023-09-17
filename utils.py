@@ -11,8 +11,8 @@ async def reset_old_first():
     if not first_msg_exists():
         return
    
-   cur_day = datetime.today().date()
-   last_claimed_day = date.fromtimestamp(os.path.getctime(FIRST_LOCK)).date()
-   if cur_day > last_claimed_day:
-       os.remove(FIRST_LOCK)
+    cur_day = datetime.today().date()
+    last_claimed_day = date.fromtimestamp(os.path.getctime(FIRST_LOCK)).date()
+    if cur_day > last_claimed_day:
+        os.remove(FIRST_LOCK)
 
