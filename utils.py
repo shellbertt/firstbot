@@ -12,7 +12,7 @@ async def reset_old_first():
         return
    
     cur_day = datetime.today().date()
-    last_claimed_day = date.fromtimestamp(os.path.getctime(FIRST_LOCK)).date()
+    last_claimed_day = datetime.fromtimestamp(os.path.getctime(FIRST_LOCK)).date()
     if cur_day > last_claimed_day:
         os.remove(FIRST_LOCK)
 
