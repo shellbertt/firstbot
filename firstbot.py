@@ -21,14 +21,17 @@ async def on_ready():
 
 @client.event
 async def on_message(msg):
-    if await first_msg_exists():
+    await reset_old_first()
+
+    if first_msg_exists():
         return
 
     # create file indicating first msg
     with open(FIRST_LOCK, "x") as file:
-        pass
+        file.write("msg.content")
 
     print(f"{msg.author.name} got the first message of the day \"{msg.content}\"!")
+    await msg.delete()
 
     try:
         await msg.author.timeout(timedelta(hours=11, minutes=55), reason="First message")
