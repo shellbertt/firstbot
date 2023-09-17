@@ -30,7 +30,10 @@ async def on_message(msg):
     with open(FIRST_LOCK, "x") as file:
         file.write("msg.content")
 
-    print(f"{msg.author.name} got the first message of the day \"{msg.content}\"!")
+    reply = f"{msg.author.name} got the first message of the day \"{msg.content}\"!"
+    print(reply)
+    await msg.channel.send(reply)
+
     await msg.delete()
 
     try:
