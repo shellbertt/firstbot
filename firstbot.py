@@ -4,6 +4,8 @@ import os.path
 import discord
 from dotenv import load_dotenv
 
+from datetime import timedelta
+
 from utils import *
 
 load_dotenv()
@@ -27,5 +29,10 @@ async def on_message(msg):
         pass
 
     print(f"{msg.author.name} got the first message of the day \"{msg.content}\"!")
+
+    try:
+        await msg.author.timeout(timedelta(hours=11, minutes=55), reason="First message")
+    except discord.errors.Forbidden as e:
+        print("Forbidden")
 
 client.run(TOKEN)
