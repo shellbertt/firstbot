@@ -12,6 +12,7 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 intents = discord.Intents.default()
+intents.members = True
 intents.message_content = True
 client = discord.Client(intents=intents)
 
@@ -44,5 +45,13 @@ async def on_message(msg):
         await msg.author.timeout(timedelta(hours=11, minutes=55), reason="First message")
     except discord.errors.Forbidden as e:
         logging.error(f"No permission to timeout {msg.author.name}")
+
+@client.event
+async def on_member_update(before, after):
+    if before.timed_out_until is not None and after.timed_out_until is None:
+        logging.info(f"Timeout removed from {after}!")
+        if get_current_claimee().id == after.id:
+            pass
+            # remove points
 
 client.run(TOKEN)
