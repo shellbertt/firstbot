@@ -1,10 +1,10 @@
+import logging
 import os
 import os.path
+from datetime import timedelta
 
 import discord
 from dotenv import load_dotenv
-
-from datetime import timedelta
 
 from utils import *
 
@@ -17,21 +17,25 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
-    print(f"{client.user} has connected to Discord!")
+    logging.getLogger().setLevel(logging.DEBUG)
+    logging.info(f"{client.user} has connected to Discord!")
 
 @client.event
 async def on_message(msg):
-    await reset_old_first()
+    if msg.author.id == client.user.id:
+        return
 
-    if first_msg_exists():
+    await remove_old_claim()
+
+    if claim_exists():
         return
 
     # create file indicating first msg
     with open(FIRST_LOCK, "x") as file:
-        file.write("msg.content")
+        file.write(f"{msg.author.name}")
 
     reply = f"{msg.author.name} got the first message of the day \" {msg.content} \"!"
-    print(reply)
+    logging.info(reply)
     await msg.channel.send(reply)
 
     await msg.delete()
@@ -39,6 +43,6 @@ async def on_message(msg):
     try:
         await msg.author.timeout(timedelta(hours=11, minutes=55), reason="First message")
     except discord.errors.Forbidden as e:
-        print("Forbidden")
+        logging.error(f"No permission to timeout {msg.author.name}")
 
 client.run(TOKEN)

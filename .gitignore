@@ -1,4 +1,4 @@
 .env
 __pycache__/
-*.swp # vim
+*.swp
 first_msg.txt
